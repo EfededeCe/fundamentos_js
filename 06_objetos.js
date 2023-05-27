@@ -9,6 +9,8 @@
  * 6 Get
  * 7 Set
  * 8 Función constructora de objetos
+ * 9 Prototype
+ * 10 Call
  */
 
 
@@ -16,7 +18,7 @@
 
 
 // 1 Creación, Propiedades y Métodos
-/**
+/*
  * Los objetos son una "referencia" a una dirección en memoria (puntero), y dentro se le
  * pueden crear propiedades (variables de cualquier tipo) y métodos (funciónes que le dan
  * un comportamiento a ese objeto en particular). Para que un objeto acceda a sus propios
@@ -43,7 +45,7 @@ console.log(persona.nombreCompleto());
 
 
 // 2 Creación con new Object()
-/** Crear un objeto con new Object(), guarda la referencia del espacio en memoria en la
+/* Crear un objeto con new Object(), guarda la referencia del espacio en memoria en la
  * variable elegida pero este queda vació. Luego de esto puede ir completandose con propiedades
  * y métodos dinámicamente, mediante la asignación (ej: persona.loQueSea = "Así").
  */
@@ -57,12 +59,12 @@ persona2.tel = 123122541;
 
 
 // 3 Acceder con notación de corchetes
-/** Para acceder con corchetes se usa el nombre de la variable (objeto) seguido de "[",
+/* Para acceder con corchetes se usa el nombre de la variable (objeto) seguido de "[",
  * dentro de los corchetes va entre comillas el nombre de la propiedad que se desea y "]".
  */
 console.log(persona2["nombre"]);
 
-/**  for in: for in es una forma de recorrer internamente un objeto. Lleva dos elementos,
+/*  for in: for in es una forma de recorrer internamente un objeto. Lleva dos elementos,
  * el primero es el nombre que vamos a usar como referencia para cada propiedad (puede ser
  * cualquiera), luego " in " y el segundo va a ser el nombre de la variable que queremos
  * iterar.
@@ -116,7 +118,7 @@ const casa = {
     }
 };
 
-/** El objeto casa tiene dos metodos (funciones), una con un "get" antepuesto y la otra
+/* El objeto casa tiene dos metodos (funciones), una con un "get" antepuesto y la otra
  * como una función normal, asociada a una propiedad (variable). Cuando accedemos a cada
  * una, la diferencia que hay es que en la que tiene "get" accedmos como si fuera una
  * propiedad más, sin poner () al final, mientras que en la función asociada a la propiedad
@@ -134,7 +136,7 @@ for (p in casa) {
 
 
 // 7 Set
-/** Si deseamos agregar o modificar el valor de una propiedad podemos usar "set", estos 
+/* Si deseamos agregar o modificar el valor de una propiedad podemos usar "set", estos 
  * nos asegura que lo que ingresemos al objeto sea validado y ahorremos errores de sintaxis
  * por hacerlo mediante asignaciones (objeto.loQueSea = "algo").
   */
@@ -164,7 +166,7 @@ console.log(usuario.normalizeEmail);
 
 // 8 Función constructora de objetos
 
-/** Para crear un contructor de una clase de objetos podemos utilizar una función,
+/* Para crear un contructor de una clase de objetos podemos utilizar una función,
  * a esta la nombramos como el tipo de objeto que vamos a obtener y comenzando con mayuscula.
  * los parámetros que le asignemos serán los valores de sus propiedades.
  */
@@ -174,22 +176,29 @@ function Usuario(nombre, apellido, edad, email = ""){
     this.apellido = apellido;
     this.edad = edad;
     this.email = email;
+    this.nombreCompleto = function(){
+        return this.nombre + " " + this.apellido;
+    }
 };
 
 
-/** Asignamos a una variable la referencia a un espacio en memoria para el objeto que deseamos
+/* Asignamos a una variable la referencia a un espacio en memoria para el objeto que deseamos
  * construir con la palabra "new", luego podemos crear la cantidad de objetos que deseemos
  * asignandolos a distintas variables, pasando por parámetro las propiedades.
 */
+
 const primerUsuario = new Usuario("Lola", "Ravana", 56, "lalola@mail.com");
 const segundoUsuario = new Usuario("Lolo", "Revono", 55);
 
 console.log(Object.values(primerUsuario));
 console.log(Object.values(segundoUsuario));
 
-/** Creando una variable (const) asignandole un new String, vemos que el tipo de dato es un
- * objeto igualmente, que tiene sus propiedades y métodos. Asi, cada variable a la que le
- * asignemos un "new" va a generar un obeto
+console.log(primerUsuario.nombreCompleto());
+console.log(segundoUsuario.nombreCompleto());
+
+/* Creando una variable (const) asignandole un new String, vemos que el tipo de dato es un
+* objeto igualmente, que tiene sus propiedades y métodos. Asi, cada variable a la que le
+* asignemos un "new" va a generar un obeto
 */
 
 const algo = new String("Mi string");
@@ -200,5 +209,45 @@ console.log(otroAlgo);
 console.log(typeof otroAlgo);
 
 
+// 9 Prototype
+
+/* Con prototype se puede "modificar" el objeto constructor y afectar a todos los
+ * objetos que salen de él */
+
+Usuario.prototype.tel = "Ingrese un nro de teléfono";
+
+console.log(Object.values(segundoUsuario));
+
+console.log(segundoUsuario.tel);
+segundoUsuario.tel = "4567891"
+console.log(segundoUsuario.tel);
+console.log(primerUsuario.tel);
+
+
+
+// 10 Call
+
+/* El método "call" nos permite utilizar un método que está dentro de un objeto, en otro
+    objeto que no tiene ese método, para esto, deben tener las mismas propiedades */
+
+const autoUsado = {
+    puerta: 5,
+    caja: "automática",
+    caracteristicas: function(){
+        return  "La caja es " + this.caja + " y tiene " + this.puerta + " puertas.";
+    }
+}
+
+const autoNuevo = {
+    puerta: 3,
+    caja: "semi automática"
+}
+
+console.log(autoUsado);
+console.log(autoNuevo);
+console.log(autoNuevo.acelerar);
+
+// Los valores que toma "this", van a ser los del objeto que se pasa por parámetro.
+console.log(autoUsado.caracteristicas.call( autoNuevo ));
 
 
