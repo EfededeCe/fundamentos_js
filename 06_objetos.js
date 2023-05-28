@@ -11,6 +11,7 @@
  * 8 Función constructora de objetos
  * 9 Prototype
  * 10 Call
+ * 11 Aplly
  */
 
 
@@ -250,4 +251,32 @@ console.log(autoNuevo.acelerar);
 // Los valores que toma "this", van a ser los del objeto que se pasa por parámetro.
 console.log(autoUsado.caracteristicas.call( autoNuevo ));
 
+// También se pueden pasar los parametros si los tiene a la función separandose por ",".
+const producto = {
+    marca: "Una marca",
+    creado: 2023,
+    info: function(tipo, origen){
+        return this.marca + " hizo en " + this.creado + " este prducto de tipo " + tipo + " en " + origen;
+    }
+};
 
+const producto2 = {
+    marca: "Otra marca",
+    creado: 2022,
+}
+
+console.log(producto.info.call(producto2, "embutido","Entre Ríos"));
+
+
+// 11 Aplly
+
+// Funciona igual que "call" pero cuando se pasan argumentos solo admite un arreglo
+
+
+const producto3 = {
+    marca: "Otra marca más",
+    creado: 2025,
+}
+
+let argumentos = ["panificado", "Salta"];
+console.log(producto.info.apply(producto3, argumentos ));
