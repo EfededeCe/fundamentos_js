@@ -10,7 +10,7 @@
  * 7 Parámetros y Argumentos    Valores por defecto
  * 8 Pase por Valor y Referencia    Tipos primitivos
  * 9 Parámetros REST
- * 1111 Diferencias entre clásicas y arrows functions (post de Midu)
+ * 
 */
 
 
