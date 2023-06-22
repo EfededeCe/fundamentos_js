@@ -12,6 +12,8 @@
  * 9 Prototype
  * 10 Call
  * 11 Aplly
+ * 12 Destructuring con objetos
+ * 13 Objetos literales
  */
 
 
@@ -36,6 +38,46 @@ let persona = {
 };
 
 console.log(persona);
+
+/*  Importante: tener en cuenta que this hace referencia al contexto en que se encuentra declarado, si se
+ *  usa dentro de una función anónima va a tener el contexto de la misma, pero si se usa dentro de una
+ *  función flecha va ha saltar su contexto, por el contexto global.
+ */
+// si ejecutamos este log en el navegador nos devolverá el objeto window 
+console.log(this); 
+
+const unObjeto = {
+    nombre: "nom",
+    apellido: "ape",
+    edad: 44,
+    accion(){   // ECMA Script 6
+        console.log(this);
+    }
+};
+unObjeto.accion()
+
+const otroObjeto = {
+    nombre: "otroNom",
+    apellido: "otroApe",
+    edad: 33,
+    accion: function(){
+        console.log(this);
+    }
+}
+
+otroObjeto.accion()
+
+const otroObjetoMas = {
+    nombre: "otroNom",
+    apellido: "otroApe",
+    edad: 33,
+    accion: () => {
+        console.log(this);
+    }
+}
+console.log("El siguiente log es de un this en una función flecha dentro de un objeto");
+// En el siguiente log, también en el navegador, recivimos el objeto window, así es como salteamos el contexto local
+otroObjetoMas.accion();
 
 // para acceder al valor de una propiedad hay que escribir el nombre de la variable (el objeto)
 // seguido de un punto "." y luego la propiedad o método que se desea obtener.
@@ -280,3 +322,21 @@ const producto3 = {
 
 let argumentos = ["panificado", "Salta"];
 console.log(producto.info.apply(producto3, argumentos ));
+
+
+//  12 Destructuring con objetos
+// Se crea una variable para cada propiedad del objeto con el mismo nombre, y se asignan los valores
+const { caja, puerta } = autoUsado;
+
+console.log(puerta, caja);
+
+
+// 13 Objetos literales
+// Si la variable que queremos igualar a una propiedad del nuestro nuevo objeto, va a tener el mismo nombre
+// podemos cambiar ->  puerta: puerta, caja: caja} <- por -> puerta, caja
+const otroAuto = {
+    puerta,
+    caja
+};
+
+console.log(otroAuto);

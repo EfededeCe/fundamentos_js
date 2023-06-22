@@ -69,3 +69,53 @@ console.log(miCasa._propietario);   // Accedo a la propiedad directamente
 miCasa.propietario = "Mi otro yo";  // Cambio la propiedad mediante el "set"
 console.log(miCasa.propietario);
 
+
+
+class Animal{
+    // en el caso de las clases tenemos el constructor dentro de la misma, a diferencia de los prototipos:
+    constructor(nombre, raza){
+        this.nombre = nombre;
+        this.raza = raza;
+    }
+
+    accion(){
+        console.log("Corre");
+    }
+    saludar(){
+        console.log(`Hola, soy ${this.nombre}`);
+    }
+}
+
+
+class Perro extends Animal {
+    constructor(nombre, raza, tamanio){
+        super(nombre, raza);
+        this.tamanio = tamanio;
+        this.edad = null;
+    }
+    accion(){
+        console.log("Sobreescribimos  la acción que estaba en la clase padre Animal");
+    }
+    ladrar(){
+        console.log("Guau!!");
+    }
+
+    static perro(){
+        console.log("Soy un perro, un animal doméstico");   // los métodos static se pueden llamar sin necesidad de que haya una instancia de la clase 
+    }
+
+    get getEdad(){
+        return this.edad
+    }
+    set setEdad(edad){
+        this.edad = edad;
+    }
+}
+
+
+const pelusa = new Perro("Pelusa", "Callejerita", "Pequeñita");
+
+console.log(pelusa);
+
+pelusa.accion();
+pelusa.ladrar();

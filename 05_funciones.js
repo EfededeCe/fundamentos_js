@@ -9,6 +9,8 @@
  * 6 Función flecha (Arrow Function)
  * 7 Parámetros y Argumentos    Valores por defecto
  * 8 Pase por Valor y Referencia    Tipos primitivos
+ * 9 Parámetros REST
+ * 1111 Diferencias entre clásicas y arrows functions (post de Midu)
 */
 
 
@@ -86,15 +88,42 @@ function otraFuncion(a,b,c) {
 console.log(otraFuncion(10,8,1.3));
 
 
+// O para utilizar una cantidad indeterminada de argumentos, aunque en el punto 9 (Parámetros REST) vemos una forma
+// más moderna y que admite su utilización en las arrow functions
+function argumentFunction (a,b,c,d) {
+    let sumaParametrosTotales = a;
+    console.log(typeof arguments);
+    for (const key in arguments) {          // Utilizamos un for in ya que arguments es un objeto
+        if (Object.hasOwnProperty.call(arguments, key)) {
+            const e = arguments[key];
+            console.log(e);
+            sumaParametrosTotales += e; 
+        }
+    }
+    console.log(arguments.length);
+    return sumaParametrosTotales
+};
+
+console.log(argumentFunction(54,468, 10, 10, 100));
+
 
 // 6 Función flecha (Arrow Function)
 
 // La función flecha es como una función anónima, en cuanto a la sintaxis, difiere en que
-//  no lleva la palabra "function", y si es de una línea no necesita llaves ni "return"
+//  no lleva la palabra "function", y si es de una línea no necesita llaves ni "return". Además si tiene un 
+// solo parámetro no necesita paréntesis.
 const sumaConFuncionFlecha = (a, b) => a + b;
-
 console.log(sumaConFuncionFlecha(5,5));
 
+const sumarFlecha = (a,b,c) => {
+    let sumaAB = a + b;
+    console.log(sumaAB);
+    return a + b + c;
+}
+console.log(sumarFlecha(1,65,4));
+
+const nombreFlecha = nombre => `Hola ${nombre}`;
+console.log(nombreFlecha("Daria"));
 
 
 // 7 Parámetros y Argumentos
@@ -160,4 +189,17 @@ cambiarValorObjeto(persona);    // Ejecuto el método para cambiar valores
 
 console.log(persona);   // Cambia valores
 
+
+
+// 9 Parámetros REST
+
+const paramRest = (a, b, ...c) => {
+    let suma = a + b;
+    c.forEach( (e) => {
+        suma += e
+    })
+    return suma;
+};
+
+console.log(paramRest(5,6,54,100));
 
